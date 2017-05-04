@@ -15,14 +15,14 @@ namespace Signal_Mood.Controllers
 	{
 		private SignalMoodContext MoodContext => new SignalMoodContext();
 
-		[Route, HttpPost]
+		[Route("save"), HttpPost]
 		public bool SaveMood(MoodState mood)
 		{
 			MoodContext.MoodEvents.Add(new MoodEvent {Rating = mood, TimeOfRating = DateTime.UtcNow});
 			return MoodContext.SaveChanges() > 0;
 		}
 
-		[Route, HttpPost]
+		[Route("stats"), HttpPost]
 		public IEnumerable<MoodEvent> GetEvents(DateTime fromDate, DateTime? toDate)
 		{
 			if(toDate == null) toDate = DateTime.UtcNow;
