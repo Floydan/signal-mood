@@ -25,14 +25,22 @@ namespace Signal_Mood.Controllers
 		}
 
 		[Route("stats"), HttpPost]
-		public IEnumerable<MoodEvent> GetEvents(StatsQueryModel queryModel)
+		public IEnumerable<MoodEventViewModel> GetEvents(StatsQueryModel queryModel)
 		{
 			if(queryModel.ToDate == null) queryModel.ToDate = DateTime.UtcNow;
 			
 			using (var context = new SignalMoodContext())
 			{
-				var stats = context.MoodEvents.Where(w => w.TimeOfRating >= queryModel.FromDate && w.TimeOfRating <= queryModel.ToDate.Value).ToList();
-				return stats;
+				var stats =
+					context.MoodEvents.Where(w => w.TimeOfRating >= queryModel.FromDate && w.TimeOfRating <= queryModel.ToDate.Value);
+				return stats.ToList()
+					.Select(w => new MoodEventViewModel
+					{
+						Id = w.Id,
+						Rating = w.Rating,
+						TimeOfRating = w.TimeOfRating,
+						DayOfWeek = w.TimeOfRating.DayOfWeek.ToString()
+					});
 			}
 		}
 

@@ -250,3 +250,8 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/Signal-Mood/frontend/src/store
+/Signal-Mood/frontend/src/actions.js
+/Signal-Mood/frontend/src/constants.js
+/Signal-Mood/frontend/src/initialState.json
+/Signal-Mood/frontend/src/routes.js
