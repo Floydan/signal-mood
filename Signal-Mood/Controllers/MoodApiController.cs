@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Routing;
+using Signal_Mood.Data;
 using Signal_Mood.Models;
 
 namespace Signal_Mood.Controllers
@@ -12,18 +10,44 @@ namespace Signal_Mood.Controllers
 	[RoutePrefix("api/mood")]
 	public class MoodApiController : ApiController
 	{
-		[Route, HttpPost]
-		public bool SaveMood(MoodState mood)
+		
+		[Route("save/{mood:int:min(0):max(3)}"), HttpPost]
+		public bool SaveMood(int mood)
 		{
-			//new MoodEvent {Rating = mood, TimeOfRating = DateTime.UtcNow};
-			return false;
+			var moodEvent = new MoodEvent { Rating = (MoodState)mood, TimeOfRating = DateTime.UtcNow };
+			using (var context = new SignalMoodContext())
+			{
+				context.MoodEvents.Add(moodEvent);
+				context.SaveChanges();
+			}
+
+			return moodEvent.Id > 0;
 		}
 
-		[Route, HttpPost]
-		public IEnumerable<MoodEvent> GetEvents(DateTime fromDate, DateTime? toDate)
+		[Route("stats"), HttpPost]
+		public IEnumerable<MoodEventViewModel> GetEvents(StatsQueryModel queryModel)
 		{
-			if(toDate == null) toDate = DateTime.UtcNow;
-			return Enumerable.Empty<MoodEvent>();
-		} 
+			if(queryModel.ToDate == null) queryModel.ToDate = DateTime.UtcNow;
+			
+			using (var context = new SignalMoodContext())
+			{
+				var stats =
+					context.MoodEvents.Where(w => w.TimeOfRating >= queryModel.FromDate && w.TimeOfRating <= queryModel.ToDate.Value);
+				return stats.ToList()
+					.Select(w => new MoodEventViewModel
+					{
+						Id = w.Id,
+						Rating = w.Rating,
+						TimeOfRating = w.TimeOfRating,
+						DayOfWeek = w.TimeOfRating.DayOfWeek.ToString()
+					});
+			}
+		}
+
+		public class StatsQueryModel
+		{
+			public DateTime FromDate { get; set; }
+			public DateTime? ToDate { get; set; }
+		}
 	}
 }

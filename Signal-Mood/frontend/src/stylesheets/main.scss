@@ -1,0 +1,35 @@
+﻿body {
+    background: #dbf8ff;
+}
+.smileys {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    &__smiley {
+        font-size: 180px;
+        display: inline-block;
+        width: 25%;
+        top: 50%;
+        position: absolute;
+        transform: translateY(-50%);
+        text-align: center;
+        line-height: 1;
+        a {
+            text-decoration: none;
+        }
+        &--very-happy {
+            right: 0;
+        }
+        &--happy {
+            right: 25%;
+        }
+        &--unhappy {
+            left: 25%;
+        }
+        &--very-unhappy {
+            left: 0;
+        }
+    }
+}

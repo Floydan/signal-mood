@@ -2,10 +2,10 @@
 
 public enum MoodState
 {
-    Happy,
-    Content,
-    Dissatisfied,
-    PissedOff
+    Happy = 0,
+    Content = 1,
+    Dissatisfied = 2,
+    PissedOff = 3
 }
 namespace Signal_Mood.Models
 {
