@@ -11,25 +11,28 @@ namespace Signal_Mood.Controllers
 	public class MoodApiController : ApiController
 	{
 		
-		[Route("save/{mood:int}"), HttpPost]
+		[Route("save/{mood:int:min(0):max(3)}"), HttpPost]
 		public bool SaveMood(int mood)
 		{
-			using(var context = new SignalMoodContext())
+			var moodEvent = new MoodEvent { Rating = (MoodState)mood, TimeOfRating = DateTime.UtcNow };
+			using (var context = new SignalMoodContext())
 			{
-				context.MoodEvents.Add(new MoodEvent { Rating = (MoodState)mood, TimeOfRating = DateTime.UtcNow });
-				return context.SaveChanges() > 0;
+				context.MoodEvents.Add(moodEvent);
+				context.SaveChanges();
 			}
+
+			return moodEvent.Id > 0;
 		}
 
 		[Route("stats"), HttpPost]
 		public IEnumerable<MoodEvent> GetEvents(StatsQueryModel queryModel)
 		{
 			if(queryModel.ToDate == null) queryModel.ToDate = DateTime.UtcNow;
+			
 			using (var context = new SignalMoodContext())
 			{
-				return
-					context.MoodEvents.Where(
-						w => w.TimeOfRating >= queryModel.FromDate && w.TimeOfRating <= queryModel.ToDate.Value);
+				var stats = context.MoodEvents.Where(w => w.TimeOfRating >= queryModel.FromDate && w.TimeOfRating <= queryModel.ToDate.Value).ToList();
+				return stats;
 			}
 		}
 
