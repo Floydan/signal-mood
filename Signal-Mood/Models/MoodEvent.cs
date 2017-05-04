@@ -13,5 +13,6 @@ namespace Signal_Mood.Models
     {
         public MoodState Rating { get; set; }
         public DateTime TimeOfRating { get; set; }
+        public int Id { get; set; }
     }
 }
