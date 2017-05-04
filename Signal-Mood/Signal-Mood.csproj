@@ -17191,7 +17191,10 @@
     <Content Include="frontend\node_modules\yargs\yargs.js" />
     <Content Include="frontend\package.json" />
     <Content Include="frontend\src\components\Smileys.js" />
+    <Content Include="frontend\src\constants\index.js" />
     <Content Include="frontend\src\index.js" />
+    <Content Include="frontend\src\store\index.js" />
+    <Content Include="frontend\src\store\reducers.js" />
     <Content Include="frontend\webpack.config.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

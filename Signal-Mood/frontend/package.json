@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/MoonTahoe/ski-day-counter-redux#readme",
   "dependencies": {
+    "axios": "^0.16.1",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
