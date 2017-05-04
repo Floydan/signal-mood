@@ -21915,7 +21915,7 @@
 
 
 	// module
-	exports.push([module.id, ".smileys {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0; }\n  .smileys__smiley {\n    font-size: 180px;\n    display: inline-block;\n    width: 25%;\n    top: 50%;\n    position: absolute;\n    -webkit-transform: translateY(-50%);\n            transform: translateY(-50%);\n    text-align: center;\n    line-height: 1; }\n    .smileys__smiley a {\n      text-decoration: none; }\n    .smileys__smiley--very-happy {\n      right: 0; }\n    .smileys__smiley--happy {\n      right: 25%; }\n    .smileys__smiley--unhappy {\n      left: 25%; }\n    .smileys__smiley--very-unhappy {\n      left: 0; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #dbf8ff; }\n\n.smileys {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0; }\n  .smileys__smiley {\n    font-size: 180px;\n    display: inline-block;\n    width: 25%;\n    top: 50%;\n    position: absolute;\n    -webkit-transform: translateY(-50%);\n            transform: translateY(-50%);\n    text-align: center;\n    line-height: 1; }\n    .smileys__smiley a {\n      text-decoration: none; }\n    .smileys__smiley--very-happy {\n      right: 0; }\n    .smileys__smiley--happy {\n      right: 25%; }\n    .smileys__smiley--unhappy {\n      left: 25%; }\n    .smileys__smiley--very-unhappy {\n      left: 0; }\n", ""]);
 
 	// exports
 
