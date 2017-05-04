@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Routing;
 using Signal_Mood.Data;
 using Signal_Mood.Models;
 
@@ -13,20 +10,33 @@ namespace Signal_Mood.Controllers
 	[RoutePrefix("api/mood")]
 	public class MoodApiController : ApiController
 	{
-		private SignalMoodContext MoodContext => new SignalMoodContext();
-
-		[Route("save"), HttpPost]
-		public bool SaveMood(MoodState mood)
+		
+		[Route("save/{mood:int}"), HttpPost]
+		public bool SaveMood(int mood)
 		{
-			MoodContext.MoodEvents.Add(new MoodEvent {Rating = mood, TimeOfRating = DateTime.UtcNow});
-			return MoodContext.SaveChanges() > 0;
+			using(var context = new SignalMoodContext())
+			{
+				context.MoodEvents.Add(new MoodEvent { Rating = (MoodState)mood, TimeOfRating = DateTime.UtcNow });
+				return context.SaveChanges() > 0;
+			}
 		}
 
 		[Route("stats"), HttpPost]
-		public IEnumerable<MoodEvent> GetEvents(DateTime fromDate, DateTime? toDate)
+		public IEnumerable<MoodEvent> GetEvents(StatsQueryModel queryModel)
 		{
-			if(toDate == null) toDate = DateTime.UtcNow;
-			return MoodContext.MoodEvents.Where(w => w.TimeOfRating >= fromDate && w.TimeOfRating <= toDate.Value);
-		} 
+			if(queryModel.ToDate == null) queryModel.ToDate = DateTime.UtcNow;
+			using (var context = new SignalMoodContext())
+			{
+				return
+					context.MoodEvents.Where(
+						w => w.TimeOfRating >= queryModel.FromDate && w.TimeOfRating <= queryModel.ToDate.Value);
+			}
+		}
+
+		public class StatsQueryModel
+		{
+			public DateTime FromDate { get; set; }
+			public DateTime? ToDate { get; set; }
+		}
 	}
 }
