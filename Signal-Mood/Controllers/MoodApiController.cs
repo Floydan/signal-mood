@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Microsoft.AspNet.SignalR;
 using Signal_Mood.Data;
 using Signal_Mood.Models;
+using Signal_Mood.SignlR;
 
 namespace Signal_Mood.Controllers
 {
@@ -20,7 +22,8 @@ namespace Signal_Mood.Controllers
 				context.MoodEvents.Add(moodEvent);
 				context.SaveChanges();
 			}
-
+		    var hubContext = GlobalHost.ConnectionManager.GetHubContext<MoodHub>();
+		    hubContext.Clients.All.addMessage("nytt humör: " + mood);
 			return moodEvent.Id > 0;
 		}
 
