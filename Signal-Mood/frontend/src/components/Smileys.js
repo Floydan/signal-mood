@@ -9,18 +9,7 @@ class Smileys extends React.Component {
     handleClick(mood, e){
         e.preventDefault();
 
-        //axios.post('http://localhost:55663/api/mood/save/' + mood);
-
-        axios.create({
-            baseURL: 'http://localhost:55663/api/mood/save/' + mood,
-            timeout: 10000,
-            withCredentials: true,
-            transformRequest: [(data) => JSON.stringify(data.data)],
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
+        axios.post('http://localhost:55663/api/mood/save/' + mood);
 
         console.log(mood);
         return false;
