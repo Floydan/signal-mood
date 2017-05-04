@@ -1,0 +1,89 @@
+﻿@model Signal_Mood.Models.Statistic
+
+@{
+    Layout = null;
+    var faces = new Dictionary<int, string>() {
+        { 0, "😀"},
+        { 1, "🙂"},
+        { 2, "🙁"},
+        { 3, "😡"}
+        };
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    
+    <style>
+        .table td {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<table class="table">
+    @{
+        var weekDays = Enum.GetValues(typeof(DayOfWeek));
+        var moodStates = Enum.GetValues(typeof(MoodState));
+    }
+    
+    <tr>
+        <td></td>
+        @foreach (var day in weekDays)
+        {
+            <td>
+                @day.ToString()
+            </td>
+        }
+        <td><b>Summary</b></td>
+    </tr>
+    @foreach (var moodState in moodStates)
+    {
+        <tr>
+            <td>@faces[(int)moodState]</td>
+            @foreach (var day in weekDays)
+            {
+                <td class="@moodState.ToString().ToLower() @day.ToString().ToLower()">@Model.DayStats((DayOfWeek) day, (MoodState) moodState)</td>
+            }
+            <td><b class="sum-@moodState.ToString().ToLower()"></b></td>
+        </tr>
+    }
+    <tr>
+    <td></td>
+    @foreach (var day in weekDays)
+    {
+        <td>
+            <b class="sum-@day.ToString().ToLower()"></b>
+        </td>
+    }
+    <td></td>
+    </tr>
+</table>
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.sum-happy').html(summary($('.happy')));
+        $('.sum-content').html(summary($('.content')));
+        $('.sum-dissatisfied').html(summary($('.dissatisfied')));
+        $('.sum-pissedoff').html(summary($('.pissedoff')));
+
+        $('.sum-monday').html(summary($('.monday')));
+        $('.sum-tuesday').html(summary($('.tuesday')));
+        $('.sum-wednesday').html(summary($('.wednesday')));
+        $('.sum-thursday').html(summary($('.thursday')));
+        $('.sum-friday').html(summary($('.friday')));
+        $('.sum-saturday').html(summary($('.saturday')));
+        $('.sum-sunday').html(summary($('.sunday')));
+    });
+    summary = function (selector) {
+        var sum = 0;
+        $(selector).each(function () {
+            sum += Number($(this).text());
+        });
+        return sum;
+    }
+</script>
+</body>
+</html>

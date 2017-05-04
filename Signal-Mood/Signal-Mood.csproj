@@ -226,6 +226,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoodApiController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Data\SignalMoodContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -240,6 +241,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MoodEventViewModel.cs" />
     <Compile Include="Models\MoodEvent.cs" />
+    <Compile Include="Models\Statistic.cs" />
     <Compile Include="SignlR\MoodHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignlR\Startup.cs" />
@@ -21431,6 +21433,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Statistics\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
