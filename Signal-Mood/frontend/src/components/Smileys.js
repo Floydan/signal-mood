@@ -4,14 +4,10 @@ import axios from 'axios'
 class Smileys extends React.Component {
     constructor(props){ 
         super(props)
-        //this.handleClick = this.handleClick.bind(this)
     }
     handleClick(mood, e){
         e.preventDefault();
-
-        axios.post('http://localhost:55663/api/mood/save/' + mood);
-
-        console.log(mood);
+        axios.post('/api/mood/save/' + mood);
         return false;
     }
     render(){

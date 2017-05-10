@@ -17193,6 +17193,7 @@
     <Content Include="frontend\node_modules\yargs\yargs.js" />
     <Content Include="frontend\package.json" />
     <Content Include="frontend\src\components\Smileys.js" />
+    <Content Include="frontend\src\components\StatsRow.js" />
     <Content Include="frontend\src\constants\index.js" />
     <Content Include="frontend\src\index.js" />
     <Content Include="frontend\src\store\index.js" />
@@ -21448,6 +21449,9 @@
     </Content>
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="frontend\src\components\Stats.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

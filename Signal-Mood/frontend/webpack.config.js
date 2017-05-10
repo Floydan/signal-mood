@@ -10,7 +10,13 @@ module.exports = {
     devServer: {
         inline: true,
         contentBase: './dist',
-        port: 3000
+        port: 3000,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:55663',
+                secure: false
+            }
+        }
     },
     module: {
         loaders: [
