@@ -9,9 +9,9 @@ class StatsRow extends React.Component {
         const weekDay = this.props.weekDay;
         return (
             <tr>
-                <td>{weekDay}</td>
+                <td className="stats-table__row-title">{weekDay}</td>
                 {Object.keys(rating).map((mood, i) => (
-                    <td key={i}>{rating[mood].length}</td>
+                    <td key={i} className="align-center">{rating[mood].length}</td>
                 ))}
             </tr>
         )

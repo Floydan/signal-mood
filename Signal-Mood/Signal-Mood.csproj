@@ -254,6 +254,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="frontend\.babelrc" />
     <Content Include="frontend\dist\assets\bundle.js" />
+    <Content Include="frontend\dist\assets\jquery-1.10.2.js" />
+    <Content Include="frontend\dist\assets\jquery.signalR-2.2.1.js" />
     <Content Include="frontend\dist\index.html" />
     <Content Include="frontend\node_modules\.bin\sha.js" />
     <Content Include="frontend\node_modules\abbrev\abbrev.js" />

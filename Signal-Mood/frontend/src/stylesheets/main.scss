@@ -1,5 +1,5 @@
-﻿body {
-    background: #dbf8ff;
+﻿.align-center {
+    text-align: center;
 }
 .smileys {
     position: fixed;
@@ -7,6 +7,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    background: #dbf8ff;
     &__smiley {
         font-size: 180px;
         display: inline-block;
@@ -31,5 +32,17 @@
         &--very-unhappy {
             left: 0;
         }
+    }
+}
+.stats-smiley {
+    font-size: 30px;
+}
+.stats-table {
+    th {
+        text-align: center;
+    }
+    &__row-title {
+        font-weight: bold;
+        text-align: left;
     }
 }

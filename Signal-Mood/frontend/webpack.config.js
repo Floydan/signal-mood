@@ -15,6 +15,10 @@ module.exports = {
             '/api': {
                 target: 'http://localhost:55663',
                 secure: false
+            },
+            '/signalr': {
+                target: 'http://localhost:55663',
+                secure: false
             }
         }
     },

@@ -10,6 +10,18 @@ class Stats extends React.Component {
             data: [],
             ratings: null
         }
+
+        const connection = $.hubConnection('/signalr/hubs');
+        const moodHubProxy = connection.createHubProxy('moodHub');
+        var self = this;
+
+        moodHubProxy.on("addMessage", function (message) {
+            self.getStats();
+        });
+
+        connection.start().done(function () {
+           
+        });
     }
     componentDidMount(){
         this.getStats();
@@ -52,23 +64,33 @@ class Stats extends React.Component {
                 {ratings === null ? (
                     null
                     ) : (
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>😀</th>
-                                    <th>🙂</th>
-                                    <th>🙁</th>
-                                    <th>😡</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    {Object.keys(ratings).map((weekDay, i) => (
-                                        <StatsRow key={i} rating={ratings[weekDay].ratings} weekDay={weekDay} />
-                                    ))}
+                        <div className="container">
+                            <h1>Signal Mood</h1>
+                            <div className="row">
+                                <div className="col-xs-12 col-md-6">
+                                    <div className="panel panel-info">
+                                        <div className="panel-heading">Stats</div>
+                                        <table className="table stats-table">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th><div className="stats-smiley">😀</div></th>
+                                                    <th><div className="stats-smiley">🙂</div></th>
+                                                    <th><div className="stats-smiley">🙁</div></th>
+                                                    <th><div className="stats-smiley">😡</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    {Object.keys(ratings).map((weekDay, i) => (
+                                                        <StatsRow key={i} rating={ratings[weekDay].ratings} weekDay={weekDay} />
+                                                    ))}
                                 
-                            </tbody>
-                       </table>
+                                            </tbody>
+                                       </table>
+                                   </div>
+                                </div>
+                           </div>
+                       </div>
                   )}
             </div>
         )
