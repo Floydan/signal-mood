@@ -8,18 +8,28 @@ class Stats extends React.Component {
         this.state = {
             weekDays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             data: [],
-            ratings: null
+            ratings: null,
+            activeMood: null,
+            animationTimeout: false
         }
 
         const connection = $.hubConnection('/signalr/hubs');
         const moodHubProxy = connection.createHubProxy('moodHub');
         var self = this;
+        var animationTimeout;
 
-        moodHubProxy.on("addMessage", function (message) {
+        moodHubProxy.on("addMessage", (message) => {
+            clearTimeout(animationTimeout);
+            var mood = parseInt(message.substr(message.length-1));
+            self.setState({activeMood: mood});
+            animationTimeout = setTimeout(() => { 
+                self.setState({activeMood: null}); 
+            }, 2000);
+
             self.getStats();
         });
 
-        connection.start().done(function () {
+        connection.start().done(() => {
            
         });
     }
@@ -59,6 +69,7 @@ class Stats extends React.Component {
     render(){
         const weekDays = this.state.weekDays
         const ratings = this.state.ratings;
+        const activeMood = this.state.activeMood;
         return (
             <div>
                 {ratings === null ? (
@@ -74,17 +85,16 @@ class Stats extends React.Component {
                                             <thead>
                                                 <tr>
                                                     <th></th>
-                                                    <th><div className="stats-smiley">😀</div></th>
-                                                    <th><div className="stats-smiley">🙂</div></th>
-                                                    <th><div className="stats-smiley">🙁</div></th>
-                                                    <th><div className="stats-smiley">😡</div></th>
+                                                    <th><div className={`stats-smiley ${activeMood === 0 ? 'stats-smiley--animate' : ''}`}>😀</div></th>
+                                                    <th><div className={`stats-smiley ${activeMood === 1 ? 'stats-smiley--animate' : ''}`}>🙂</div></th>
+                                                    <th><div className={`stats-smiley ${activeMood === 2 ? 'stats-smiley--animate' : ''}`}>🙁</div></th>
+                                                    <th><div className={`stats-smiley ${activeMood === 3 ? 'stats-smiley--animate' : ''}`}>😡</div></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                     {Object.keys(ratings).map((weekDay, i) => (
                                                         <StatsRow key={i} rating={ratings[weekDay].ratings} weekDay={weekDay} />
                                                     ))}
-                                
                                             </tbody>
                                        </table>
                                    </div>
@@ -94,7 +104,7 @@ class Stats extends React.Component {
                   )}
             </div>
         )
-     }
-}
+    }
+    }
 
 export default Stats
